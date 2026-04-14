@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { fetchWeatherFromAPI } from "./services/weatherService";
 
 dotenv.config();
 
@@ -20,17 +21,20 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.get("/api/weather", async (req, res) => {
-    const city = req.query.city as string;
+    const lon = parseFloat(req.query.lon as string);
+    const lat = parseFloat(req.query.lat as string);
 
-    if (!city) {
-        return res.status(400).json({ error: "City is required" });
+    if (isNaN(lon) || isNaN(lat)) {
+        return res.status(400).json({ error: "Latitude and longitude are required" });
     }
 
-    res.json({
-        locationName: city,
-        temperature: 15,
-        condition: "Sunny",
-    });
+    try {
+        const weather = await fetchWeatherFromAPI(lat, lon);
+        res.json(weather);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch weather" });
+    }
 });
 
 

@@ -1,6 +1,6 @@
-export async function fetchWeather(city: string) {
+export async function fetchWeather(lat: number, lon: number): Promise<any> {
     const response = await fetch(
-        `/api/weather?city=${encodeURIComponent(city)}`
+        `/api/weather?lat=${lat}&lon=${lon}`
     );
 
     if (!response.ok) {
