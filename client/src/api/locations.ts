@@ -1,4 +1,7 @@
-export async function fetchLocations(q: string): Promise<any> {
+import { LocationSuggestion } from "@/types/types";
+
+
+export async function fetchLocations(q: string): Promise<LocationSuggestion[]> {
     const response = await fetch(
         `/api/locations?q=${encodeURIComponent(q)}`
     );

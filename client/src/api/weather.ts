@@ -1,4 +1,7 @@
-export async function fetchWeather(lat: number, lon: number): Promise<any> {
+import { WeatherResponse } from "@/types/types";
+
+
+export async function fetchWeather(lat: number, lon: number): Promise<WeatherResponse> {
     const response = await fetch(
         `/api/weather?lat=${lat}&lon=${lon}`
     );
