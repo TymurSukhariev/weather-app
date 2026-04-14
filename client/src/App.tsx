@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchWeather } from "./api/weather";
+import { fetchLocations } from "./api/locations";
 
 function App() {
   const [data, setData] = useState<any>(null);
@@ -8,6 +9,14 @@ function App() {
     const weatherData = await fetchWeather(54.6872, 25.2797); // Example coordinates for Vilnius
     setData(weatherData);
   };
+
+  useEffect(() => {
+    const fetchLocationsData = async () => {
+      const locations = await fetchLocations("Vi");
+      console.log(locations);
+    };
+    fetchLocationsData();
+  }, []);
 
   return (
     <div>
