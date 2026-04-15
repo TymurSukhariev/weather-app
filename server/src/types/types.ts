@@ -21,6 +21,11 @@ export type WeatherResponse = {
             icon: string;
         }[];
     }[];
+    humidity: number;
+    feels_like: number;
+    visibility: number;
+    pressure: number;
+
 };
 
 export type LocationSuggestion = {

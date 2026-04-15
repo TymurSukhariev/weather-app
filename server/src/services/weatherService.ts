@@ -17,13 +17,17 @@ export async function fetchWeatherFromAPI(lat: number, lon: number): Promise<Wea
     );
 
     const data = response.data;
-
+    // return data;
     return {
         locationName: `Lat: ${lat}, Lon: ${lon}`,
         temperature: Math.round(data.current.temp),
         condition: data.current.weather[0].description,
         hourly: data.hourly.slice(0, 24),
         timezone: data.timezone,
-        daily: data.daily.slice(0, 7)
+        daily: data.daily.slice(0, 7),
+        humidity: data.current.humidity,
+        feels_like: Math.round(data.current.feels_like),
+        visibility: data.current.visibility,
+        pressure: data.current.pressure
     };
 }

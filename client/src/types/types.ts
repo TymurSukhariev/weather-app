@@ -24,6 +24,10 @@ export type WeatherData = {
     timezone: string;
     hourly: OpenWeatherHourly[];
     daily: OpenWeatherDaily[];
+    humidity: number;
+    feels_like: number;
+    visibility: number;
+    pressure: number;
 };
 
 export type LocationData = {

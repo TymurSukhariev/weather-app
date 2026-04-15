@@ -3,6 +3,7 @@ import { HourlyForecast } from "./HourlyForecast";
 import { mapHourlyForecast } from "@/utils/mapHourlyForecast";
 import { DailyForecast } from "./DailyForecast";
 import { mapDailyForecast } from "@/utils/mapDailyForecast";
+import { WeatherDetails } from "./WeatherDetails";
 
 
 export function WeatherSection({ weatherData }: { weatherData: WeatherData | null }) {
@@ -26,6 +27,7 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
             </div>
             <HourlyForecast items={mappedHourly} />
             <DailyForecast items={mappedDaily} />
+            <WeatherDetails weatherData={weatherData} />
         </div>
     );
 }
