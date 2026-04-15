@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { fetchLocations } from "@/api/locations";
-import type { LocationSuggestion } from "@/types/types";
-import { Button } from "./ui/button";
-import { Searchbar } from "./Searchbar";
+import type { LocationSuggestion, WeatherData } from "@/types/types";
+import { LocationPicker } from "./LocationPicker";
 
-export function Sidebar() {
+export function Sidebar({ setWeatherData }: { setWeatherData: (data: WeatherData) => void }) {
     const [query, setQuery] = useState("");
     const [debouncedQuery, setDebouncedQuery] = useState("");
     const [locations, setLocations] = useState<LocationSuggestion[]>([]);
@@ -38,14 +37,15 @@ export function Sidebar() {
     }, [debouncedQuery]);
 
     return (
-        <div className="w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4">
-            <div className="relative w-[300px]">
-                <Searchbar
-                    query={query}
-                    setQuery={setQuery}
-                    locations={locations}
-                />
-            </div>
+        <div className="absolute w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4 border border-red-300">
+            {/* <div className="relative w-[300px]"> */}
+            <LocationPicker
+                query={query}
+                setQuery={setQuery}
+                locations={locations}
+                setWeatherData={setWeatherData}
+            />
+            {/* </div> */}
         </div>
     );
 }

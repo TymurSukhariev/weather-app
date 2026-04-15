@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { fetchWeather } from "./api/weather";
 import { fetchLocations } from "./api/locations";
 import { Sidebar } from "./components/Sidebar";
+import { WeatherSection } from "./components/WeatherSection";
+import { WeatherData } from "./types/types";
 
 function App() {
-  const [data, setData] = useState<any>(null);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
-  const handleFetchData = async () => {
-    const weatherData = await fetchWeather(54.6872, 25.2797); // Example coordinates for Vilnius
-    setData(weatherData);
-  };
   return (
-    <>
-      <Sidebar />
-    </>
+    <div>
+      <Sidebar setWeatherData={setWeatherData} />
+      <WeatherSection weatherData={weatherData} />
+    </div>
   );
 }
 

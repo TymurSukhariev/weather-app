@@ -1,4 +1,4 @@
-export type WeatherResponse = {
+export type WeatherData = {
     locationName: string;
     temperature: number;
     condition: string;

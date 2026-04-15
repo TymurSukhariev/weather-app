@@ -1,17 +1,33 @@
-import { LocationSuggestion } from "@/types/types";
-import { useId } from "react";
+import { LocationSuggestion, WeatherData } from "@/types/types";
+import { useId, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { fetchWeather } from "@/api/weather";
 
 
-type SearchbarProps = {
+type LocationPickerProps = {
     query: string;
     setQuery: (query: string) => void;
     locations: LocationSuggestion[];
+    setWeatherData: (data: WeatherData) => void
 }
 
-export function Searchbar({ query, setQuery, locations }: SearchbarProps) {
+export function LocationPicker({ query, setQuery, locations, setWeatherData }: LocationPickerProps) {
     const suggestionsListId = useId();
+
+    async function handleSetWeather(location: LocationSuggestion) {
+        try {
+            const weather = await fetchWeather(location.latitude, location.longitude);
+
+            setWeatherData({
+                locationName: location.cityName,
+                temperature: weather.temperature,
+                condition: weather.condition,
+            });
+        } catch (error) {
+            console.error("Failed to fetch weather", error);
+        }
+    }
 
     return (
         <>
@@ -38,6 +54,7 @@ export function Searchbar({ query, setQuery, locations }: SearchbarProps) {
                                 type="button"
                                 className="block w-full px-3 py-2 text-left hover:bg-gray-100"
                                 aria-label={`Select ${location.cityName}`}
+                                onClick={() => handleSetWeather(location)}
                             >
                                 {location.cityName}
                             </Button>
