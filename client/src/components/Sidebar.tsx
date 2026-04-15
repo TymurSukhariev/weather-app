@@ -28,7 +28,7 @@ export function Sidebar({ setWeatherData }: SidebarProps) {
 
     return (
         <div className="w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4">
-            <LocationPicker onWeatherLoad={handleWeatherLoad} />
+            <LocationPicker onWeatherLoad={handleWeatherLoad} setHistory={setHistory} />
             <HistorySection onWeatherLoad={handleWeatherLoad} history={history} />
         </div>
     );

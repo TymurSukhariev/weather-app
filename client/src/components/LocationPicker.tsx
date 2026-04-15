@@ -1,16 +1,16 @@
-import { LocationData, WeatherData } from "@/types/types";
+import { LocationData } from "@/types/types";
 import { useEffect, useId, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { fetchWeather } from "@/api/weather";
 import { fetchLocations } from "@/api/locations";
 
 
 type LocationPickerProps = {
     onWeatherLoad: (location: LocationData) => void;
+    setHistory: React.Dispatch<React.SetStateAction<LocationData[]>>;
 }
 
-export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
+export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProps) {
     const suggestionsListId = useId();
 
 
@@ -45,7 +45,6 @@ export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
         fetchLocationsData();
     }, [debouncedQuery]);
 
-
     function saveLocation(location: LocationData) {
         const existing: LocationData[] = JSON.parse(
             localStorage.getItem("locations") || "[]"
@@ -56,6 +55,14 @@ export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
         const updated = [location, ...filtered].slice(0, 5); // keep last 5
 
         localStorage.setItem("locations", JSON.stringify(updated));
+        setHistory(updated);
+    }
+
+    function handlePickLocation(location: LocationData) {
+        setQuery('');
+        setLocations([]);
+        onWeatherLoad(location);
+        saveLocation(location);
     }
 
     return (
@@ -84,8 +91,7 @@ export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
                                 className="block w-full px-3 py-2 text-left hover:bg-gray-100"
                                 aria-label={`Select ${location.cityName}`}
                                 onClick={() => {
-                                    onWeatherLoad(location);
-                                    saveLocation(location);
+                                    handlePickLocation(location);
                                 }}
                             >
                                 {location.cityName}
@@ -97,3 +103,4 @@ export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
         </>
     );
 }
+
