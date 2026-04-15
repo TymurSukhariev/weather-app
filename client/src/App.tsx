@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { fetchWeather } from "./api/weather";
-import { fetchLocations } from "./api/locations";
+import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { WeatherSection } from "./components/WeatherSection";
 import { WeatherData } from "./types/types";

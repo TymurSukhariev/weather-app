@@ -1,33 +1,60 @@
 import { LocationSuggestion, WeatherData } from "@/types/types";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { fetchWeather } from "@/api/weather";
+import { fetchLocations } from "@/api/locations";
 
 
 type LocationPickerProps = {
-    query: string;
-    setQuery: (query: string) => void;
-    locations: LocationSuggestion[];
-    setWeatherData: (data: WeatherData) => void
+    setWeatherData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
 }
 
-export function LocationPicker({ query, setQuery, locations, setWeatherData }: LocationPickerProps) {
+export function LocationPicker({ setWeatherData }: LocationPickerProps) {
     const suggestionsListId = useId();
 
-    async function handleSetWeather(location: LocationSuggestion) {
-        try {
-            const weather = await fetchWeather(location.latitude, location.longitude);
+    const [query, setQuery] = useState("");
+    const [debouncedQuery, setDebouncedQuery] = useState("");
+    const [locations, setLocations] = useState<LocationSuggestion[]>([]);
 
+    useEffect(() => {
+        const timeout = window.setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 200);
+
+        return () => window.clearTimeout(timeout);
+    }, [query]);
+
+    useEffect(() => {
+        if (!debouncedQuery.trim()) {
+            setLocations([]);
+            return;
+        }
+
+        const fetchLocationsData = async () => {
+            try {
+                const results = await fetchLocations(debouncedQuery);
+                setLocations(results);
+            } catch (error) {
+                console.error(error);
+                setLocations([]);
+            }
+        };
+
+        fetchLocationsData();
+    }, [debouncedQuery]);
+
+    async function handleSetWeather(location: LocationSuggestion) {
+        if (location) {
+            const weather: WeatherData = await fetchWeather(location.latitude, location.longitude);
             setWeatherData({
                 locationName: location.cityName,
                 temperature: weather.temperature,
-                condition: weather.condition,
+                condition: weather.condition
             });
-        } catch (error) {
-            console.error("Failed to fetch weather", error);
         }
-    }
+
+    };
 
     return (
         <>
