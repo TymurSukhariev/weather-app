@@ -22,13 +22,15 @@ export function Sidebar({ setWeatherData }: SidebarProps) {
         setWeatherData({
             locationName: location.cityName,
             temperature: weather.temperature,
-            condition: weather.condition
+            condition: weather.condition,
+            hourly: weather.hourly,
+            timezone: weather.timezone
         });
     };
 
 
     return (
-        <div className="absolute w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4 border border-red-300">
+        <div className="w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4">
             <LocationPicker onWeatherLoad={handleWeatherLoad} />
             <HistorySection onWeatherLoad={handleWeatherLoad} history={history} />
         </div>
