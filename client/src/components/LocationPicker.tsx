@@ -7,11 +7,10 @@ import { fetchLocations } from "@/api/locations";
 
 
 type LocationPickerProps = {
-    setWeatherData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
-
+    onWeatherLoad: (location: LocationData) => void;
 }
 
-export function LocationPicker({ setWeatherData }: LocationPickerProps) {
+export function LocationPicker({ onWeatherLoad }: LocationPickerProps) {
     const suggestionsListId = useId();
 
 
@@ -46,18 +45,6 @@ export function LocationPicker({ setWeatherData }: LocationPickerProps) {
         fetchLocationsData();
     }, [debouncedQuery]);
 
-
-    async function handleSetWeather(location: LocationData) {
-        if (location) {
-            const weather: WeatherData = await fetchWeather(location.latitude, location.longitude);
-            setWeatherData({
-                locationName: location.cityName,
-                temperature: weather.temperature,
-                condition: weather.condition
-            });
-        }
-
-    };
 
     function saveLocation(location: LocationData) {
         const existing: LocationData[] = JSON.parse(
@@ -97,7 +84,7 @@ export function LocationPicker({ setWeatherData }: LocationPickerProps) {
                                 className="block w-full px-3 py-2 text-left hover:bg-gray-100"
                                 aria-label={`Select ${location.cityName}`}
                                 onClick={() => {
-                                    handleSetWeather(location)
+                                    onWeatherLoad(location);
                                     saveLocation(location);
                                 }}
                             >
