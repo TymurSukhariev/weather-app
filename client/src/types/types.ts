@@ -4,7 +4,7 @@ export type WeatherData = {
     condition: string;
 };
 
-export type LocationSuggestion = {
+export type LocationData = {
     id: string;
     cityName: string;
     latitude: number;

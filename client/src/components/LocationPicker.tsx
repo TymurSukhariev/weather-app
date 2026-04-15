@@ -1,4 +1,4 @@
-import { LocationSuggestion, WeatherData } from "@/types/types";
+import { LocationData, WeatherData } from "@/types/types";
 import { useEffect, useId, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -8,14 +8,16 @@ import { fetchLocations } from "@/api/locations";
 
 type LocationPickerProps = {
     setWeatherData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
+
 }
 
 export function LocationPicker({ setWeatherData }: LocationPickerProps) {
     const suggestionsListId = useId();
 
+
     const [query, setQuery] = useState("");
     const [debouncedQuery, setDebouncedQuery] = useState("");
-    const [locations, setLocations] = useState<LocationSuggestion[]>([]);
+    const [locations, setLocations] = useState<LocationData[]>([]);
 
     useEffect(() => {
         const timeout = window.setTimeout(() => {
@@ -44,7 +46,8 @@ export function LocationPicker({ setWeatherData }: LocationPickerProps) {
         fetchLocationsData();
     }, [debouncedQuery]);
 
-    async function handleSetWeather(location: LocationSuggestion) {
+
+    async function handleSetWeather(location: LocationData) {
         if (location) {
             const weather: WeatherData = await fetchWeather(location.latitude, location.longitude);
             setWeatherData({
@@ -55,6 +58,18 @@ export function LocationPicker({ setWeatherData }: LocationPickerProps) {
         }
 
     };
+
+    function saveLocation(location: LocationData) {
+        const existing: LocationData[] = JSON.parse(
+            localStorage.getItem("locations") || "[]"
+        );
+
+        const filtered = existing.filter((l) => l.id !== location.id);
+
+        const updated = [location, ...filtered].slice(0, 5); // keep last 5
+
+        localStorage.setItem("locations", JSON.stringify(updated));
+    }
 
     return (
         <>
@@ -81,7 +96,10 @@ export function LocationPicker({ setWeatherData }: LocationPickerProps) {
                                 type="button"
                                 className="block w-full px-3 py-2 text-left hover:bg-gray-100"
                                 aria-label={`Select ${location.cityName}`}
-                                onClick={() => handleSetWeather(location)}
+                                onClick={() => {
+                                    handleSetWeather(location)
+                                    saveLocation(location);
+                                }}
                             >
                                 {location.cityName}
                             </Button>
