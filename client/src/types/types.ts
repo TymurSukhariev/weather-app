@@ -6,12 +6,24 @@ export type OpenWeatherHourly = {
     }[];
 };
 
+export type OpenWeatherDaily = {
+    dt: number;
+    temp: {
+        min: number;
+        max: number;
+    };
+    weather: {
+        icon: string;
+    }[];
+};
+
 export type WeatherData = {
     locationName: string;
     temperature: number;
     condition: string;
     timezone: string;
     hourly: OpenWeatherHourly[];
+    daily: OpenWeatherDaily[];
 };
 
 export type LocationData = {

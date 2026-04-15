@@ -24,6 +24,7 @@ export function Sidebar({ setWeatherData }: SidebarProps) {
             temperature: weather.temperature,
             condition: weather.condition,
             hourly: weather.hourly,
+            daily: weather.daily,
             timezone: weather.timezone
         });
     };

@@ -1,10 +1,13 @@
 import { WeatherData } from "@/types/types";
 import { HourlyForecast } from "./HourlyForecast";
 import { mapHourlyForecast } from "@/utils/mapHourlyForecast";
+import { DailyForecast } from "./DailyForecast";
+import { mapDailyForecast } from "@/utils/mapDailyForecast";
 
 
 export function WeatherSection({ weatherData }: { weatherData: WeatherData | null }) {
-    const mappedItems = mapHourlyForecast(weatherData?.hourly || [], weatherData?.timezone || "UTC");
+    const mappedHourly = mapHourlyForecast(weatherData?.hourly || [], weatherData?.timezone || "UTC");
+    const mappedDaily = mapDailyForecast(weatherData?.daily || [], weatherData?.timezone || "UTC");
 
     return (
         <div>
@@ -21,7 +24,8 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
                 )}
 
             </div>
-            <HourlyForecast items={mappedItems} />
+            <HourlyForecast items={mappedHourly} />
+            <DailyForecast items={mappedDaily} />
         </div>
     );
 }

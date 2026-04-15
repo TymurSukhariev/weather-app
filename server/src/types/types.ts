@@ -11,6 +11,16 @@ export type WeatherResponse = {
             icon: string;
         }[];
     }[];
+    daily: {
+        dt: number;
+        temp: {
+            min: number;
+            max: number;
+        };
+        weather: {
+            icon: string;
+        }[];
+    }[];
 };
 
 export type LocationSuggestion = {
