@@ -5,6 +5,7 @@ import { DailyForecast } from "./DailyForecast";
 import { mapDailyForecast } from "@/utils/mapDailyForecast";
 import { WeatherDetails } from "./WeatherDetails";
 import { getCurrentDate } from "@/utils/getCurrentFormattedDate";
+import { CurrentWeather } from "./CurrentWeather";
 
 
 
@@ -15,32 +16,21 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
     const icon = weatherData?.hourly[0]?.weather[0]?.icon;
 
     return (
-        <div>
-            <div>
-                <h2 className="text-2xl font-bold mb-4">Weather Information</h2>
-                {weatherData ? (
-                    <div>
-                        <p>Location: {weatherData.locationName}</p>
-                        <p>Temperature: {weatherData.temperature}°C</p>
-                        <p>Condition: {weatherData.condition}</p>
-                        <img src={`/weather-icons/${icon}.png`} alt="Weather icon" />
-                        <div>
-                            <p className="text-white">{currentLocalDate.weekday}</p>
-                            <p className="text-white">{currentLocalDate.date}</p>
-                        </div>
-                    </div>
-                ) : (
-                    <p>Please search for a location</p>
-                )}
-
+        <div className="p-6 flex flex-col gap-6 items-center w-full 2xl:w-[1700px] mx-auto">
+            <div className="flex items-start gap-6">
+                <CurrentWeather
+                    temperature={weatherData?.temperature || 0}
+                    condition={weatherData?.condition || "N/A"}
+                    locationName={weatherData?.locationName || "Unknown"}
+                    region={weatherData?.region || null}
+                    weekday={currentLocalDate.weekday}
+                    date={currentLocalDate.date}
+                    icon={icon || "01d"}
+                />
+                <HourlyForecast items={mappedHourly} />
             </div>
-            <HourlyForecast items={mappedHourly} />
             <DailyForecast items={mappedDaily} />
             <WeatherDetails weatherData={weatherData} />
         </div>
     );
-}
-
-function getCurrentFormattedDate(arg0: string) {
-    throw new Error("Function not implemented.");
 }
