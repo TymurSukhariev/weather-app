@@ -12,20 +12,20 @@ type DailyForecastProps = {
 
 export function DailyForecast({ items }: DailyForecastProps) {
     return (
-        <div>
-            <h2 className="text-2xl font-bold mb-4">Daily Forecast</h2>
-            <div className="flex gap-4 overflow-x-auto pb-2 rounded-2xl border bg-white/70 p-4 shadow-sm w-[800px]">
+        <div className="min-w-0 rounded-2xl bg-[#1E1E1E] mt-2 p-4">
+            <h2 className="text-xl  mb-4 text-white">Daily Forecast</h2>
+            <div className="flex flex-col pb-2 rounded-2xl shadow-sm h-[300px] 2xl:h-[350px] overflow-y-auto">
                 {items.map((item) => (
                     <div
                         key={`${item.day}-${item.iconCode}`}
-                        className="flex min-w-[64px] flex-col items-center gap-2"
+                        className="flex min-w-[64px] items-center gap-2 bg-[#272727] rounded-2xl px-4 py-3 mb-2 justify-between"
                     >
-                        <span className="text-xs text-gray-500">{item.day}</span>
+                        <span className="text-xl text-white">{item.day}</span>
 
                         <img
                             src={`/weather-icons/${item.iconCode}.png`}
                             alt={item.iconCode}
-                            className="h-8 w-8"
+                            className="h-12 w-12"
                         />
 
                         <span className="text-sm font-medium">{item.minTemp}° / {item.maxTemp}°</span>

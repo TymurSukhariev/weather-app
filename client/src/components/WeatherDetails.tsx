@@ -16,7 +16,7 @@ export function WeatherDetails({ weatherData }: { weatherData: WeatherData | nul
     ];
 
     return (
-        <div className="mt-4 rounded-2xl bg-[#1E1E1E] grid grid-cols-4 gap-3 p-4">
+        <div className="mt-2 rounded-2xl bg-[#1E1E1E] grid grid-cols-4 gap-3 p-4">
             <h2 className="col-span-4 text-xl text-white">Weather Details</h2>
             {details.map((detail) => (
                 <WeatherDetailBlock
