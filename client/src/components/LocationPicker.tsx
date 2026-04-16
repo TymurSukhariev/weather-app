@@ -1,5 +1,5 @@
 import { LocationData } from "@/types/types";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { fetchLocations } from "@/api/locations";
@@ -13,6 +13,7 @@ type LocationPickerProps = {
 export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProps) {
     const suggestionsListId = useId();
 
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const [query, setQuery] = useState("");
     const [debouncedQuery, setDebouncedQuery] = useState("");
@@ -45,6 +46,23 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
         fetchLocationsData();
     }, [debouncedQuery]);
 
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(event.target as Node)
+            ) {
+                setLocations([]);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [])
+
     function saveLocation(location: LocationData) {
         const existing: LocationData[] = JSON.parse(
             localStorage.getItem("locations") || "[]"
@@ -66,7 +84,7 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
     }
 
     return (
-        <>
+        <div ref={containerRef}>
             <Input
                 placeholder="Search city..."
                 value={query}
@@ -100,7 +118,7 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
                     ))}
                 </ul>
             )}
-        </>
+        </div>
     );
 }
 
