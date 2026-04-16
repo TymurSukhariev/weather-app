@@ -12,7 +12,7 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
 
     return (
         <div>
-            <div className="">
+            <div>
                 <h2 className="text-2xl font-bold mb-4">Weather Information</h2>
                 {weatherData ? (
                     <div>
