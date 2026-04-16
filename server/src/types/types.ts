@@ -25,7 +25,10 @@ export type WeatherResponse = {
     feels_like: number;
     visibility: number;
     pressure: number;
-
+    uvi: number;
+    wind_speed: number;
+    cloudiness: number;
+    dew_point: number;
 };
 
 export type LocationSuggestion = {

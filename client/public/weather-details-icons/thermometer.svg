@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="White thermometer icon">
+  <title>White thermometer icon</title>
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M64 20v56"/>
+    <path d="M64 76a20 20 0 1 0 0 40a20 20 0 0 0 0-40z" fill="#FFFFFF" stroke="#FFFFFF"/>
+    <path d="M64 12c-8.837 0-16 7.163-16 16v52.101C40.719 85.066 36 93.037 36 102c0 15.464 12.536 28 28 28s28-12.536 28-28c0-8.963-4.719-16.934-12-21.899V28c0-8.837-7.163-16-16-16z"/>
+  </g>
+</svg>

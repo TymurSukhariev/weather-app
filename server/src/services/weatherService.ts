@@ -28,6 +28,11 @@ export async function fetchWeatherFromAPI(lat: number, lon: number): Promise<Wea
         humidity: data.current.humidity,
         feels_like: Math.round(data.current.feels_like),
         visibility: data.current.visibility,
-        pressure: data.current.pressure
+        pressure: data.current.pressure,
+        uvi: data.current.uvi,
+        wind_speed: data.current.wind_speed,
+        cloudiness: data.current.clouds,
+        dew_point: data.current.dew_point
     };
 }
+
