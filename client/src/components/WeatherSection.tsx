@@ -16,8 +16,8 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
     const icon = weatherData?.hourly[0]?.weather[0]?.icon;
 
     return (
-        <div className="p-6 flex flex-col gap-6 items-center w-full 2xl:w-[1700px] mx-auto">
-            <div className="flex items-start gap-6">
+        <div className="py-6 px-10 flex flex-col gap-6 items-center w-full 2xl:w-[1700px] mx-auto border border-yellow-500">
+            <div className="flex gap-6 w-full justify-between">
                 <CurrentWeather
                     temperature={weatherData?.temperature || 0}
                     condition={weatherData?.condition || "N/A"}
@@ -29,8 +29,11 @@ export function WeatherSection({ weatherData }: { weatherData: WeatherData | nul
                 />
                 <HourlyForecast items={mappedHourly} />
             </div>
-            <DailyForecast items={mappedDaily} />
-            <WeatherDetails weatherData={weatherData} />
+            {/* <DailyForecast items={mappedDaily} /> */}
+            <div className="flex justify-between border border-red-500 w-full">
+                <div className="w-[400px] bg-green-500 h-[340px] rounded-2xl"></div>
+                <WeatherDetails weatherData={weatherData} />
+            </div>
         </div>
     );
 }

@@ -10,13 +10,13 @@ type HourlyForecastProps = {
 
 export function HourlyForecast({ items }: HourlyForecastProps) {
     return (
-        <main className="rounded-2xl bg-[#1E1E1E] pt-2 w-[720px] 2xl:w-[1100px]">
-            <h1 className="text-white text-xl ml-4">Hourly Forecast</h1>
+        <section className="rounded-2xl bg-[#1E1E1E] pt-2 w-[890px] 2xl:w-[1250px] flex-1 min-w-0 mb-2">
+            <h1 className="text-white text-xl ml-4 mt-3 mb-4">Hourly Forecast</h1>
             <div className="flex gap-4 overflow-x-auto  p-4 shadow-sm  items-center">
                 {items.map((item) => (
                     <div
                         key={`${item.timeLabel}-${item.iconCode}`}
-                        className="flex min-w-[74px] flex-col items-center gap-2 h-[150px] bg-[#272727] py-3 rounded-3xl"
+                        className="flex min-w-[74px] flex-col items-center gap-3  bg-[#272727] py-3 rounded-3xl"
                     >
                         <span
                             className="
@@ -42,6 +42,6 @@ export function HourlyForecast({ items }: HourlyForecastProps) {
                     </div>
                 ))}
             </div>
-        </main>
+        </section>
     );
 }

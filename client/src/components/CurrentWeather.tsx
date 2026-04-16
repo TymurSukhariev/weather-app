@@ -34,7 +34,7 @@ export function CurrentWeather({ temperature, condition, locationName, region, w
                     <p className="text-white font-light">{date}</p>
                 </div>
             </div>
-            <img className="w-[130px] mx-auto" src={`/weather-icons/${icon}.png`} alt="Weather icon" />
+            <img className="w-[130px] mx-auto mt-[-10px]" src={`/weather-icons/${icon}.png`} alt="Weather icon" />
         </div>
 
 
