@@ -37,6 +37,7 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
             try {
                 const results = await fetchLocations(debouncedQuery);
                 setLocations(results);
+
             } catch (error) {
                 console.error(error);
                 setLocations([]);
@@ -100,19 +101,24 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
                     id={suggestionsListId}
                     role="listbox"
                     aria-label="Location suggestions"
-                    className="top-full z-50 mt-1 max-h-64 w-full overflow-y-auto rounded-md border bg-white shadow"
+                    className="top-full z-50 mt-1 max-h-[300px] w-full overflow-y-auto rounded-md border bg-white shadow pt-2"
                 >
                     {locations.map((location) => (
-                        <li key={location.id} role="option" aria-selected={false}>
+                        <li className="mb-4" key={location.id} role="option" aria-selected={false}>
                             <Button
                                 type="button"
-                                className="block w-full px-3 py-2 text-left hover:bg-gray-100"
+                                className="block w-full px-3 py-3 text-left hover:bg-gray-100 flex flex-col items-start gap-0 "
                                 aria-label={`Select ${location.cityName}`}
                                 onClick={() => {
                                     handlePickLocation(location);
                                 }}
                             >
-                                {location.cityName}
+                                <span className="text-sm font-medium text-gray-900">
+                                    {location.cityName}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                    {location.region}
+                                </span>
                             </Button>
                         </li>
                     ))}

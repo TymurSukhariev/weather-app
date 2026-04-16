@@ -19,6 +19,7 @@ export type OpenWeatherDaily = {
 
 export type WeatherData = {
     locationName: string;
+    region: string;
     temperature: number;
     condition: string;
     timezone: string;
@@ -33,6 +34,7 @@ export type WeatherData = {
 export type LocationData = {
     id: string;
     cityName: string;
+    region: string;
     latitude: number;
     longitude: number;
 };

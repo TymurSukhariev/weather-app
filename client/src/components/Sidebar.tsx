@@ -19,9 +19,11 @@ export function Sidebar({ setWeatherData }: SidebarProps) {
 
     async function handleWeatherLoad(location: LocationData) {
         const weather: WeatherData = await fetchWeather(location.latitude, location.longitude);
+
         setWeatherData({
             ...weather,
-            locationName: location.cityName
+            locationName: location.cityName,
+            region: location.region,
         });
     };
 

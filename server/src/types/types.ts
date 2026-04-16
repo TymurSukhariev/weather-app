@@ -31,6 +31,7 @@ export type WeatherResponse = {
 export type LocationSuggestion = {
     id: string;
     cityName: string;
+    region: string;
     latitude: number;
     longitude: number;
 };

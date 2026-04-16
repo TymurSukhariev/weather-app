@@ -4,7 +4,8 @@ import { LocationSuggestion } from "../types/types";
 type MapboxLocationFeature = {
     id: string;
     properties: {
-        full_address: string;
+        name: string;
+        place_formatted: string;
         coordinates: {
             latitude: number;
             longitude: number;
@@ -32,8 +33,10 @@ export async function fetchLocations(q: string): Promise<LocationSuggestion[]> {
     )
     return response.data.features.map((feature) => ({
         id: feature.id,
-        cityName: feature.properties.full_address,
+        cityName: feature.properties.name,
+        region: feature.properties.place_formatted,
         latitude: feature.properties.coordinates.latitude,
         longitude: feature.properties.coordinates.longitude,
+
     }));
 }
