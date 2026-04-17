@@ -21,7 +21,7 @@ export function CurrentWeather({ temperature, condition, locationName, region, w
 
             <div className="flex gap-2 items-center mb-4 bg-[#363636] w-fit px-3 py-1 rounded-3xl">
                 <img src={`/location-icon.svg`} alt="Location icon" />
-                <p className="text-white text-lg">{locationName}, {region && region}</p>
+                <p className="text-white text-lg">{locationName} {region && `, ${region}`}</p>
             </div>
 
             <div className="flex justify-between mt-6">

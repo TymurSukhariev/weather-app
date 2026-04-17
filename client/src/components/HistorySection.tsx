@@ -29,7 +29,7 @@ export function HistorySection({ history, onWeatherLoad, isOpen, setIsOpen }: Hi
                                 setIsOpen(false);
                             }
                             }>
-                            {location.cityName}, {location.region}
+                            {location.cityName} {location?.region && `, ${location.region}`}
                         </Button>
                     </li>
                 ))}
