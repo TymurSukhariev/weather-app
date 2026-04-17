@@ -20,20 +20,21 @@ export function HistorySection({ history, onWeatherLoad, isOpen, setIsOpen }: Hi
             className="absolute bottom-8 text-white"
         >
             <h1 className="text-xl mb-2">History</h1>
-            <ul>
-                {history.map((location) => (
-                    <li key={location.id}>
-                        <Button className="text-gray-500 hover:text-white"
-                            onClick={() => {
-                                onWeatherLoad(location);
-                                setIsOpen(false);
-                            }
-                            }>
-                            {location.cityName} {location?.region && `, ${location.region}`}
-                        </Button>
-                    </li>
-                ))}
-            </ul>
+            {history.length > 0 ?
+                <ul>
+                    {history.map((location) => (
+                        <li key={location.id}>
+                            <Button className="text-gray-500 hover:text-white"
+                                onClick={() => {
+                                    onWeatherLoad(location);
+                                    setIsOpen(false);
+                                }
+                                }>
+                                {location.cityName} {location?.region && `, ${location.region}`}
+                            </Button>
+                        </li>
+                    ))}
+                </ul> : <p className="text-gray-500">Here you will see your search history...</p>}
         </motion.div>
     )
 }
