@@ -4,10 +4,12 @@ import { WeatherSection } from "./components/WeatherSection";
 import { WeatherData } from "./types/types";
 import { fetchWeather } from "./api/weather";
 import { SearchPlaceholder } from "./components/SearchPlaceholder";
+import { Loader } from "./components/Loader";
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isOpen, setIsOpen] = useState(true);
+  const [isWeatherLoading, setIsWeatherLoading] = useState(false);
 
   return (
     <div className="flex min-h-screen overflow-hidden relative">
@@ -15,12 +17,20 @@ function App() {
       <img className="absolute top-[-600px] 2xl:top-[-550px] right-[-600px] 2xl:right-[-550px] pointer-events-none" src="Ellipse.svg" />
       <img className="absolute bottom-[-600px] 2xl:bottom-[-550px] left-[-600px] 2xl:left-[-550px] pointer-events-none" src="Ellipse2.svg" />
 
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} setWeatherData={setWeatherData} weatherData={weatherData} />
+      <Sidebar
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setWeatherData={setWeatherData}
+        weatherData={weatherData}
+        setIsWeatherLoading={setIsWeatherLoading} />
 
-      {weatherData ?
-        <WeatherSection weatherData={weatherData} /> :
+      {isWeatherLoading ? (
+        <Loader />
+      ) : weatherData ? (
+        <WeatherSection weatherData={weatherData} />
+      ) : (
         <SearchPlaceholder isOpen={isOpen} />
-      }
+      )}
     </div>
   );
 }

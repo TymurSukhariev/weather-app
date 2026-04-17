@@ -13,14 +13,16 @@ type SidebarProps = {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     weatherData: WeatherData | null;
+    setIsWeatherLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OPEN_WIDTH = 350;
 const CLOSED_WIDTH = 40;
 
-export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData }: SidebarProps) {
+export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData, setIsWeatherLoading }: SidebarProps) {
 
     const [history, setHistory] = useState<LocationData[]>([]);
+
 
     useEffect(() => {
         const stored = JSON.parse(localStorage.getItem("locations") || "[]");
@@ -28,14 +30,25 @@ export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData }: Side
     }, []);
 
     async function handleWeatherLoad(location: LocationData) {
-        const weather: WeatherData = await fetchWeather(location.latitude, location.longitude);
+        try {
+            setIsWeatherLoading(true);
 
-        setWeatherData({
-            ...weather,
-            locationName: location.cityName,
-            region: location.region,
-        });
-    };
+            const weather: WeatherData = await fetchWeather(
+                location.latitude,
+                location.longitude
+            );
+
+            setWeatherData({
+                ...weather,
+                locationName: location.cityName,
+                region: location.region,
+            });
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsWeatherLoading(false);
+        }
+    }
 
 
     return (
