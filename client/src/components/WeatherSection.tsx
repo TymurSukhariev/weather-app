@@ -8,12 +8,16 @@ import { getCurrentDate } from "@/utils/getCurrentFormattedDate";
 import { CurrentWeather } from "./CurrentWeather";
 
 
+type WeatherSectionProps = {
+    weatherData: WeatherData | null;
+}
 
-export function WeatherSection({ weatherData }: { weatherData: WeatherData | null }) {
+export function WeatherSection({ weatherData }: WeatherSectionProps) {
     const mappedHourly = mapHourlyForecast(weatherData?.hourly || [], weatherData?.timezone || "UTC");
     const mappedDaily = mapDailyForecast(weatherData?.daily || [], weatherData?.timezone || "UTC");
     const currentLocalDate = getCurrentDate(weatherData?.timezone || "UTC");
     const icon = weatherData?.hourly[0]?.weather[0]?.icon;
+
 
     return (
         <div className="py-6 px-16 flex flex-col gap-6 items-center w-full 2xl:w-[1700px] mx-auto justify-center z-10">
