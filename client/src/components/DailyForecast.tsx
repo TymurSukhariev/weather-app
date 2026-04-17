@@ -28,7 +28,10 @@ export function DailyForecast({ items }: DailyForecastProps) {
                             className="h-12 w-12"
                         />
 
-                        <span className="text-sm font-medium">{item.minTemp}° / {item.maxTemp}°</span>
+                        <p className="text-lg font-medium text-gray-400">{item.minTemp}°
+                            <span className="text-gray-600 text-lg"> / </span>
+                            <span className="text-white text-lg">{item.maxTemp}°</span>
+                        </p>
                     </div>
                 ))}
             </div>
