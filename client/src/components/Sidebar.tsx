@@ -3,12 +3,22 @@ import { LocationPicker } from "./LocationPicker";
 import { useEffect, useState } from "react";
 import { HistorySection } from "./HistorySection";
 import { fetchWeather } from "@/api/weather";
+import { OpenCloseIcon } from "./OpenCloseIcon";
+import { motion } from "framer-motion";
+import { Overlay } from "./Overlay";
+import { AnimatePresence } from "framer-motion";
 
 type SidebarProps = {
     setWeatherData: React.Dispatch<React.SetStateAction<WeatherData | null>>;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    weatherData: WeatherData | null;
 }
 
-export function Sidebar({ setWeatherData }: SidebarProps) {
+const OPEN_WIDTH = 350;
+const CLOSED_WIDTH = 40;
+
+export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData }: SidebarProps) {
 
     const [history, setHistory] = useState<LocationData[]>([]);
 
@@ -29,9 +39,19 @@ export function Sidebar({ setWeatherData }: SidebarProps) {
 
 
     return (
-        <div className="w-[350px] min-h-screen rounded-r-xl bg-gray-100 p-4">
-            <LocationPicker onWeatherLoad={handleWeatherLoad} setHistory={setHistory} />
-            <HistorySection onWeatherLoad={handleWeatherLoad} history={history} />
-        </div>
+        <>
+            <AnimatePresence>
+                {isOpen && weatherData && <Overlay />}
+            </AnimatePresence>
+            <motion.div className='absolute top-0 left-0 min-h-screen bg-[#1E1E1E] rounded-r-2xl p-4 z-30 pt-14 overflow-hidden'
+                initial={{ width: OPEN_WIDTH }}
+                animate={{ width: isOpen ? OPEN_WIDTH : CLOSED_WIDTH }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+                <OpenCloseIcon isOpen={isOpen} setIsOpen={setIsOpen} />
+                <LocationPicker isOpen={isOpen} onWeatherLoad={handleWeatherLoad} setHistory={setHistory} setIsOpen={setIsOpen} />
+                <HistorySection isOpen={isOpen} onWeatherLoad={handleWeatherLoad} history={history} setIsOpen={setIsOpen} />
+            </motion.div>
+        </>
     );
 }

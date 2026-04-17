@@ -3,14 +3,17 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { fetchLocations } from "@/api/locations";
+import { motion } from "framer-motion";
 
 
 type LocationPickerProps = {
     onWeatherLoad: (location: LocationData) => void;
     setHistory: React.Dispatch<React.SetStateAction<LocationData[]>>;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProps) {
+export function LocationPicker({ onWeatherLoad, setHistory, isOpen, setIsOpen }: LocationPickerProps) {
     const suggestionsListId = useId();
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -82,10 +85,16 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
         setLocations([]);
         onWeatherLoad(location);
         saveLocation(location);
+        setIsOpen(false);
     }
 
     return (
-        <div ref={containerRef}>
+        <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : -20 }}
+            transition={{ duration: 0.3 }}
+            style={{ pointerEvents: isOpen ? "auto" : "none" }}
+        >
             <Input
                 placeholder="Search city..."
                 value={query}
@@ -95,19 +104,20 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
                 aria-autocomplete="list"
                 aria-expanded={locations.length > 0}
                 aria-controls={locations.length > 0 ? suggestionsListId : undefined}
+                className="rounded-3xl bg-[#272727] border-0 focus:ring-0 w-full mb-2 text-white placeholder:text-gray-600"
             />
             {locations.length > 0 && (
                 <ul
                     id={suggestionsListId}
                     role="listbox"
                     aria-label="Location suggestions"
-                    className="top-full z-50 mt-1 max-h-[300px] w-full overflow-y-auto rounded-md border bg-white shadow pt-2"
+                    className="top-full z-50 mt-1 max-h-[300px] w-full overflow-y-auto rounded-2xl border bg-white shadow pt-2"
                 >
                     {locations.map((location) => (
                         <li className="mb-4" key={location.id} role="option" aria-selected={false}>
                             <Button
                                 type="button"
-                                className="block w-full px-3 py-3 text-left hover:bg-gray-100 flex flex-col items-start gap-0 "
+                                className="block w-full px-3 py-4 text-left hover:bg-gray-100 flex flex-col items-start gap-0 "
                                 aria-label={`Select ${location.cityName}`}
                                 onClick={() => {
                                     handlePickLocation(location);
@@ -124,7 +134,7 @@ export function LocationPicker({ onWeatherLoad, setHistory }: LocationPickerProp
                     ))}
                 </ul>
             )}
-        </div>
+        </motion.div>
     );
 }
 

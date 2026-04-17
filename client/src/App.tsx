@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { WeatherSection } from "./components/WeatherSection";
 import { WeatherData } from "./types/types";
 import { fetchWeather } from "./api/weather";
+import { SearchPlaceholder } from "./components/SearchPlaceholder";
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="flex min-h-screen overflow-hidden relative">
@@ -14,16 +15,15 @@ function App() {
       <img className="absolute top-[-600px] 2xl:top-[-550px] right-[-600px] 2xl:right-[-550px] pointer-events-none" src="Ellipse.svg" />
       <img className="absolute bottom-[-600px] 2xl:bottom-[-550px] left-[-600px] 2xl:left-[-550px] pointer-events-none" src="Ellipse2.svg" />
 
-      <Sidebar setWeatherData={setWeatherData} />
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} setWeatherData={setWeatherData} weatherData={weatherData} />
+
       {weatherData ?
         <WeatherSection weatherData={weatherData} /> :
-        <div className="flex-1 flex justify-center items-center">
-          <p className="text-gray-500">Search for a location to see the weather information</p>
-        </div>}
+        <SearchPlaceholder isOpen={isOpen} />
+      }
     </div>
   );
 }
 
 export default App;
-
 
