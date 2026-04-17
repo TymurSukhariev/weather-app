@@ -88,8 +88,7 @@ npx vitest
 
 
 ### 🔍 Search & Autocomplete
-
-
+<img width="349" height="357" alt="Screenshot 2026-04-17 at 15 27 28" src="https://github.com/user-attachments/assets/dc62e17f-5523-4a32-902b-a26e4ea075fd" />
 
 **Short description:**
 - User types a location
@@ -97,6 +96,7 @@ npx vitest
 - Selecting a location triggers weather fetch
 
 ### 🌤 Current Weather View
+<img width="444" height="292" alt="Screenshot 2026-04-17 at 15 28 06" src="https://github.com/user-attachments/assets/1daff365-4776-4422-a362-685941e6fd06" />
 
 **Short description:**
 - Displays selected location
@@ -104,7 +104,7 @@ npx vitest
 - Includes visual weather icon
 
 ### 🕒 Forecast Section
-
+<img width="1351" height="725" alt="Screenshot 2026-04-17 at 15 22 53" src="https://github.com/user-attachments/assets/cbf27775-a1b5-49e7-8dc4-d42d569db3ea" />
 
 **Short description:**
 - Hourly and daily forecasts
@@ -112,11 +112,12 @@ npx vitest
 - Clean, card-based layout
 
 ### 📌 Search History
+<img width="344" height="141" alt="Screenshot 2026-04-17 at 15 29 58" src="https://github.com/user-attachments/assets/e98aedb5-b3d0-4e30-81d4-c28c2f644c36" />
 
 **Short description:**
 - Recently searched locations
 - Stored in localStorage
-- Quick access for repeated searches
+- Quick access for repeated searches with a click opportunity
 
 ---
 
