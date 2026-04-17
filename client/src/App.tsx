@@ -5,11 +5,13 @@ import { WeatherData } from "./types/types";
 import { fetchWeather } from "./api/weather";
 import { SearchPlaceholder } from "./components/SearchPlaceholder";
 import { Loader } from "./components/Loader";
+import { ErrorBlock } from "./components/Error";
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const [isWeatherLoading, setIsWeatherLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="flex min-h-screen overflow-hidden relative">
@@ -22,10 +24,14 @@ function App() {
         setIsOpen={setIsOpen}
         setWeatherData={setWeatherData}
         weatherData={weatherData}
-        setIsWeatherLoading={setIsWeatherLoading} />
+        setIsWeatherLoading={setIsWeatherLoading}
+        setError={setError}
+      />
 
       {isWeatherLoading ? (
         <Loader />
+      ) : error ? (
+        <ErrorBlock message={error} />
       ) : weatherData ? (
         <WeatherSection weatherData={weatherData} />
       ) : (

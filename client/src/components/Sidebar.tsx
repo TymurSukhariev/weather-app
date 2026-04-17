@@ -14,12 +14,13 @@ type SidebarProps = {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     weatherData: WeatherData | null;
     setIsWeatherLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const OPEN_WIDTH = 350;
 const CLOSED_WIDTH = 40;
 
-export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData, setIsWeatherLoading }: SidebarProps) {
+export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData, setIsWeatherLoading, setError }: SidebarProps) {
 
     const [history, setHistory] = useState<LocationData[]>([]);
 
@@ -32,6 +33,7 @@ export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData, setIsW
     async function handleWeatherLoad(location: LocationData) {
         try {
             setIsWeatherLoading(true);
+            setError(null);
 
             const weather: WeatherData = await fetchWeather(
                 location.latitude,
@@ -45,6 +47,7 @@ export function Sidebar({ setWeatherData, isOpen, setIsOpen, weatherData, setIsW
             });
         } catch (error) {
             console.error(error);
+            setError("Sorry, failed to load weather data. Try again later.");
         } finally {
             setIsWeatherLoading(false);
         }
